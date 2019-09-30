@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Py3 Migration</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous"/>
+<style>
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+nav {
+    height: 50px;
+    padding-top: 8px;
+}
+nav .nav-tabs {
+    padding: 0 8px;
+}
+nav .nav-tabs .nav-link.active {
+    color: #034388;
+}
+nav .nav-tabs .nav-link:not(.active) {
+    opacity: 0.7;
+}
+nav .nav-tabs .nav-link:not(.active):hover {
+    background: #f8f8ff;
+    opacity: 1;
+}
+#nav-pres-tab {
+    margin-right: 4px;
+}
+#nav-demo-tab {
+    margin-left: 4px;
+}
+
+.carousel-item {
+    width: 100vw;
+    height: calc(100vh - 50px);
+    justify-content: center;
+    align-items: center;
+}
+.carousel-item-next, .carousel-item-prev, .carousel-item.active {
+    display: flex;
+}
+
+.carousel-control-next, .carousel-control-prev {
+    filter: invert(30%);
+    opacity: 0;
+    transition-duration: 0.4s;
+}
+.carousel-indicators {
+    margin-bottom: 16px;
+}
+.carousel-indicators li {
+    background-color: #666666;
+    width: 19px;
+    height: 19px;
+    opacity: 0.3;
+    color: #eeeeee;
+    text-indent: unset;
+    text-align: center;
+    font-size: 0.875rem;
+    line-height: 19px;
+    border: 2px solid transparent;
+}
+
+/* FONT SIZES */
+.presSlide h1 {
+    font-size: 250%;
+}
+.presSlide h2 {
+    font-size: 200%;
+}
+.presSlide li, .presSlide > div {
+    font-size: 170%;
+}
+.presSlide li li {
+    font-size: calc(24 / 27.2 * 100%);
+}
+.presSlide li button {
+    font-size: 100%;
+}
+
+.presSlide {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    justify-content: center;
+}
+.presSlide .bg {
+    position: absolute;
+    background: center 100% / 4.5% 7.5% repeat-x url(https://www.python.org/static/opengraph-icon-200x200.png);
+    width: 100%;
+    height: 100%;
+    margin: 0!important;
+    z-index: -1;
+    opacity: 0.3;
+}
+
+.presSlide h2 {
+    font-weight: 400;
+    margin-bottom: 0;
+}
+.presSlide > * {
+    margin-left: 7%;
+    margin-right: 7%;
+}
+.presSlide.tight > * {
+    margin-left: 2%;
+    margin-right: 2%;
+}
+.presSlide.rel > * {
+    margin-left: 14%;
+    margin-right: 14%;
+}
+.presSlide h1 {
+    margin-bottom: 5%;
+    text-align: center;
+}
+.presSlide.med h1 {
+    margin-bottom: 3.5%;
+}
+.presSlide.tight h1 {
+    margin-bottom: 2%;
+}
+.carousel-item:first-child .presSlide, .carousel-item:last-child .presSlide {
+    align-items: center;
+}
+.carousel-item:first-child .presSlide h1, .carousel-item:last-child .presSlide h1 {
+    font-size: 350%;  /* ### FONT SIZE! ### */
+    font-weight: 300;
+    letter-spacing: 1px;
+    margin-top: 14%;
+    color: #306998;
+}
+.presSlide ol li {
+    padding-left: 1.5%;
+}
+.presSlide li, .presSlide > div {
+    margin-bottom: 2.135%;
+}
+.rel li {
+    margin-bottom: 2.577%;
+}
+.tight li {
+    margin-bottom: 1.902%;
+}
+.presSlide li li {
+    margin-bottom: 0;
+}
+.presSlide ol:last-of-type, .presSlide ul:last-of-type, .presSlide li:last-of-type{
+    margin-bottom: 0;
+}
+
+.pyLogo {
+    display: inline-block;
+    width: calc(150 / (551 / 0.6) * 100%);
+    height: calc(150 / 551 * 100%);
+    background: url(https://www.python.org/static/opengraph-icon-200x200.png) no-repeat 100%/100% 100%;
+}
+.listImg {
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    width: calc(150 / (551 / 0.6) * 100%);
+    height: calc(150 / 551 * 100%);
+    background: url(https://www.pinclipart.com/picdir/big/108-1089780_business-insurance-form-checklist-icon-transparent-background-clipart.png) no-repeat 100%/100% 100%;
+}
+
+
+/* ================== */
+
+#demoAccordion {
+    margin: 45px;
+}
+
+.card {
+    border: 2px solid #d8d8df;
+}
+.card-header {
+    color: rgba(33, 37, 85, 0.85);
+    background: #fdfeff;
+    padding: 1.25rem;
+    text-align: center;
+    text-transform: lowercase;
+    cursor: pointer;
+    transition: color 0.4s, background 0.2s;
+}
+.card-header h2 {
+    margin: 0;
+    line-height: 1;
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+.card-header:hover {
+    color: rgba(33, 37, 85, 0.85)!important;
+    background: #eeeef4;
+}
+.card-body {
+    background: #f3f4f5;
+    border-top: 1px solid #d8d8d8;
+}
+.card-body > div {
+    margin-bottom: 10px;
+}
+.card-body .text_type_cmp_desc, .card-body h3, .card-body .text_type_options {
+    text-align: center;
+}
+.card-body .text_type_options {
+    margin-bottom: 8px;
+}
+.card-body .text_type_cmp_desc {
+    color: #444444;
+    opacity: 0.9;
+    font-size: 0.875rem;
+    margin-bottom: 0;
+}
+.card-body code {
+    font-family: Consolas, monospace;
+    padding: 4px 1px;
+    margin: 0 2px;
+    vertical-align: bottom;
+    border-radius: 3px;
+    background: #fbfcfd;
+}
+.code {
+    font-family: Consolas, monospace;
+    font-size: 16px;
+    box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.35);
+    border-radius: 3px;
+    padding: 20px;
+    color: #000000;
+    background: #ffffff;
+}
+
+.code hr {
+    border: none;
+    margin: 2px 0 0;
+}
+
+.code i {
+    font-style: normal;
+}
+
+.code .res {
+    line-height: normal;
+    margin-top: 3px;
+}
+
+.code input, .code select, .code .inputWrap {
+    border: none;
+    border-radius: 3px;
+    background: #f2f2f2;
+    min-width: 16px;
+    padding: 0 3px;
+    text-align: center;
+    box-sizing: unset;
+    display: inline-block;
+}
+.code.text_type input.in, .code.text_type .inputWrap {
+    padding: 0;
+}
+.code.text_type input.in, .code.text_type input.in:hover, .code.text_type input.in:focus {
+    background: none;
+}
+.code.text_type input.idx {
+    min-width: 8px;
+}
+.code.comparison input {
+    background: none;
+    margin: 0 2px;
+}
+.comparison select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    cursor: pointer;
+}
+
+.text_type_options span {
+    margin-right: 20px;
+}
+
+.text_type_options input {
+    margin-right: 5px;
+}
+
+.numCtrl {
+    display: inline-flex;
+    flex-direction: column;
+}
+.numCtrl button {
+    font-size: 9px;
+    line-height: 0;
+    padding: 0 2px 0 1px;
+    background: #f2f2f2;
+    border: none;
+    flex-grow: 1;
+    color: #383877;
+}
+.numCtrl button:hover, .code input:hover, .code select:hover, .code .inputHover {
+    background: #dddddd;
+}
+.numCtrl button:focus, .code input:focus, .code select:focus {
+    outline: none;
+}
+.code:not(.comparison) input:focus, .code .inputFocus {
+    background: #dddddd;
+}
+.numCtrl button:active, .code input:active {
+    background: #bbbbbb;
+}
+.numCtrlUp {
+    border-radius: 0 3px 0 0;
+}
+.numCtrlDn {
+    border-radius: 0 0 3px 0;
+}
+
+.rowFlex {
+    display: flex;
+}
+.sb {
+    justify-content: space-between;
+}
+
+.hide {
+    display: none;
+}
+
+.bold, .code b {
+    font-weight: bold;
+}
+
+.error {
+    color: #bb0000;
+}
+.ok {
+    color: green;
+}
+.replChev {
+    color: #ff5900;
+}
+
+.numColor {
+    color: #00008b;
+}
+.strColor {
+    color: #800000;
+}
+.funcColor {
+    color: #4b00a8;
+}
+</style>
+</head>
+
+<body>
+<nav>
+    <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link active" id="nav-pres-tab" data-toggle="tab" href="#nav-pres" role="tab">Presentation</a>
+        <a class="nav-item nav-link" id="nav-demo-tab" data-toggle="tab" href="#nav-demo" role="tab">Demo - python2 vs. python3</a>
+    </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+
+    <!--presentation tab-->
+    <div class="tab-pane fade show active" id="nav-pres" role="tabpanel">
+        <div id="presentationSlides" class="carousel slide" data-interval="false" data-wrap="false">
+            <ol class="carousel-indicators">
+                <li data-target="#presentationSlides" data-slide-to="0" class="active">1</li>
+                <li data-target="#presentationSlides" data-slide-to="1">2</li>
+                <li data-target="#presentationSlides" data-slide-to="2">3</li>
+                <li data-target="#presentationSlides" data-slide-to="3">4</li>
+                <li data-target="#presentationSlides" data-slide-to="4">5</li>
+                <li data-target="#presentationSlides" data-slide-to="5">6</li>
+                <li data-target="#presentationSlides" data-slide-to="6">7</li>
+                <li data-target="#presentationSlides" data-slide-to="7">8</li>
+                <li data-target="#presentationSlides" data-slide-to="8">9</li>
+                <li data-target="#presentationSlides" data-slide-to="9">10</li>
+            </ol>
+            <div class="carousel-inner">
+                <!--0-->
+                <div class="carousel-item active">
+                    <div class="presSlide med">
+                        <h1>Python3.7 Migration</h1>
+                        <h2>developer pov</h2>
+                        <span class="pyLogo"></span>
+                    </div>
+                </div>
+                <!--1-->
+                <div class="carousel-item">
+                    <div class="presSlide rel">
+                        <div class="bg"></div>
+                        <h1>Agenda</h1>
+                        <ul>
+                            <li>Presentation
+                                <ul>
+                                    <li>Why migrate?</li>
+                                    <li>Migration - step by step</li>
+                                    <li>Pitfalls</li>
+                                </ul>
+                            </li>
+                            <li>Demonstration
+                                <ul>
+                                    <li>py2 vs. py3</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <span class="listImg"></span>
+                    </div>
+                </div>
+                <!--2-->
+                <div class="carousel-item">
+                    <div class="presSlide">
+                        <div class="bg"></div>
+                        <h1>Why Migrate?</h1>
+                        <ul>
+                            <li>Python3 is updated to better meet modern standards</li>
+                            <li>A stricter and more stable python – fewer bugs</li>
+                            <li>Cool new features</li>
+                            <li>1<sup>st</sup> January 2020: End of Life for python2
+                                <ul>
+                                    <li>no more support, security fixes, patches or updates</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!--3-->
+                <div class="carousel-item">
+                    <div class="presSlide">
+                        <div class="bg"></div>
+                        <h1>[Sample] Basic Migration Plan</h1>
+                        <ul>
+                            <li>Phase 1
+                                <ul>
+                                    <li>All python scripts must be importable in py3</li>
+                                    <li>At least 1 unit test in each project must pass in py3</li>
+                                </ul>
+                            </li>
+                            <li>Phase 2
+                                <ul>
+                                    <li>All unit tests pass in py3</li>
+                                    <li>Migrate production processes to py3</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!--4-->
+                <div class="carousel-item">
+                    <div class="presSlide med">
+                        <div class="bg"></div>
+                        <h1>[Sample] Py3 Migration – Step by Step</h1>
+                        <ol>
+                            <li>Open py3 report</li>
+                            <li>Search for project</li>
+                            <li>Work through a chunk of scripts:
+                                <ul>
+                                    <li><i>Import failure</i> - attempt to import the script in py3</li>
+                                    <li><i>Test failures</i> - run the tests in the script in py3</li>
+                                </ul>
+                            </li>
+                            <li>Note the errors and failures that occur</li>
+                        </ol>
+                    </div>
+                </div>
+                <!--5-->
+                <div class="carousel-item">
+                    <div class="presSlide med">
+                        <div class="bg"></div>
+                        <h1>Py3 Migration – Step by Step (2)</h1>
+                        <ol start="5">
+                            <li>Research the py3 errors and fix. This may involve:
+                                <ul>
+                                    <li>Updating old/deprecated functionality</li>
+                                    <li>Fixing bugs caught in py3 that py2 couldn't catch</li>
+                                    <li>Handling backwards-incompatibilities</li>
+                                </ul>
+                            </li>
+                            <li>Check the fixed code in both py2 and py3
+                                <ul>
+                                    <li>Code must be able to run in both until migration is complete!</li>
+                                </ul>
+                            </li>
+                            <li>Undergo the code review and release process</li>
+                            <li>Verify that the errors no longer appear in the reports</li>
+                        </ol>
+                    </div>
+                </div>
+                <!--6-->
+                <div class="carousel-item">
+                    <div class="presSlide tight">
+                        <div class="bg"></div>
+                        <h1>Testing</h1>
+                        <ul>
+                            <li>Is merely fixing unit tests really enough?</li>
+                            <li>Is the code coverage sufficient?
+                                <ul>
+                                    <li>up to 20% of code may not be covered by tests</li>
+                                </ul>
+                            </li>
+                            <li>Are the testing and prod environments sufficiently similar?
+                                <ul>
+                                    <li>Config differences</li>
+                                    <li>‘Mocking’ in the tests may be too obfuscating</li>
+                                    <li>Lack of integration and end-to-end tests</li>
+                                </ul>
+                            </li>
+                            <li>Ideally applications will thoroughly test py3 in a prod-like env before the full transition</li>
+                        </ul>
+                    </div>
+                </div>
+                <!--7-->
+                <div class="carousel-item">
+                    <div class="presSlide">
+                        <div class="bg"></div>
+                        <h1>Py3 “gotchas”</h1>
+                        <div>There are many explicit differences between py3 and py2. Some of these might not cause test failures or errors, but may just silently cause incorrect results. Examples:</div>
+                        <ul>
+                            <li><button class="btn btn-link demo_link" data-target="#collapse1">Division</button></li>
+                            <li><button class="btn btn-link demo_link" data-target="#collapse2">Rounding</button></li>
+                        </ul>
+                    </div>
+                </div>
+                <!--8-->
+                <div class="carousel-item">
+                    <div class="presSlide">
+                        <div class="bg"></div>
+                        <h1>Py3 “gotchas” (2)</h1>
+                        <div>The following are some examples of differences between py3 and py2 that may break tests or throw errors:</div>
+                        <ul>
+                            <li><button class="btn btn-link demo_link" data-target="#collapse3">Default text type</button></li>
+                            <li><button class="btn btn-link demo_link" data-target="#collapse4">Comparable types</button></li>
+                            <li><button class="btn btn-link demo_link" data-target="#collapse5">Hashing functionality</button></li>
+                        </ul>
+                    </div>
+                </div>
+                <!--9-->
+                <div class="carousel-item">
+                    <div class="presSlide med">
+                        <h1>End</h1>
+                        <h2>questions and comments</h2>
+                        <span class="pyLogo"></span>
+                    </div>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#presentationSlides" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </a>
+            <a class="carousel-control-next" href="#presentationSlides" role="button" data-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </a>
+        </div>
+    </div>
+
+    <!--demos tab-->
+    <div class="tab-pane fade" id="nav-demo" role="tabpanel">
+        <div class="container">
+            <div class="accordion" id="demoAccordion">
+
+                <!--DIVISION-->
+                <div class="card">
+                    <div class="card-header" data-toggle="collapse" data-target="#collapse1"><h2>Division</h2></div>
+                    <div id="collapse1" class="collapse" data-parent="#demoAccordion">
+                        <div class="card-body">
+                            <div>In py2, division between two integers always returns an integer (the <i>floor</i>).</div>
+                            <div>In py3, the result now always returns with the fractional part. Py2 can only do this if at least one of the operands contains a decimal point.</div>
+                            <div class="row">
+                                <div class="col">
+                                    <h3>py2</h3>
+                                    <div class="division code">
+                                        <div class="rowFlex"><i class="replChev"></i><input id="div_in1_py2"> / <input id="div_in2_py2"></div>
+                                        <div id="div_res_py2" class="res"></div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <h3>py3</h3>
+                                    <div class="division code">
+                                        <div class="rowFlex"><i class="replChev"></i><input id="div_in1_py3"> / <input id="div_in2_py3"></div>
+                                        <div id="div_res_py3" class="res"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--ROUNDING-->
+                <div class="card">
+                    <div class="card-header" data-toggle="collapse" data-target="#collapse2"><h2>Rounding</h2></div>
+                    <div id="collapse2" class="collapse" data-parent="#demoAccordion">
+                        <div class="card-body">
+                            <div>The python versions use different tie-breaking rules for when the fractional part of a number is 0.5:</div>
+                            <div>
+                                <ul>
+                                    <li>Py2 uses <a href="https://en.wikipedia.org/wiki/Rounding#Round_half_away_from_zero" target="_blank">“Round half away from zero” (commercial rounding)</a></li>
+                                    <li>Py3 uses <a href="https://en.wikipedia.org/wiki/Rounding#Round_half_to_even" target="_blank">“Round half to even” (bankers' rounding)</a></li>
+                                </ul>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <h3>py2</h3>
+                                    <div class="rounding code">
+                                        <div class="rowFlex"><i class="replChev"></i><i class="funcColor">round</i>(<input id="round_in_py2">)</div>
+                                        <div id="round_res_py2" class="res"></div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <h3>py3</h3>
+                                    <div class="rounding code">
+                                        <div class="rowFlex"><i class="replChev"></i><i class="funcColor">round</i>(<input id="round_in_py3">)</div>
+                                        <div id="round_res_py3" class="res"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--TEXT TYPE-->
+                <div class="card">
+                    <div class="card-header" data-toggle="collapse" data-target="#collapse3"><h2>Text Type</h2></div>
+                    <div id="collapse3" class="collapse" data-parent="#demoAccordion">
+                        <div class="card-body">
+                            <div>Arguably the biggest change in py3 from a developer's point of view is the default way of handling a <code class="strColor">'string'</code> (sequence of characters).</div>
+                            <div>In py2, the default string type is <b>bytes</b> - a sequence of integers between 0 and 255. Generally, the bytes format is not human-readable, rather it is a binary serialization that is suitable for storing data on disk or transmitting data over the wire.
+                                 Py2 uses simple <a href="https://en.wikipedia.org/wiki/ASCII" target="_blank">ASCII character encoding</a> to render the integer sequences into human-readable text. Note that py2 also has a separate string type for handling <a href="https://en.wikipedia.org/wiki/Unicode" target="_blank">unicode</a> text.</div>
+                            <div>In py3, the default string type is now <b>unicode</b> - a human-readable text format containing over 130,000 characters, capable of handling most of the world's languages, scripts and writing systems.
+                                 Py3 still has a bytes string type, which is separate from and non-interchangeable with the unicode type.</div>
+                            <div>This is why running py2 code in py3 can be risky. Any functions that expected to receive and use bytes will instead start to receive unicode, and this will cause errors.</div>
+                            <div class="row">
+                                <div class="col">
+                                    <h3>py2</h3>
+                                    <div class="text_type_options">
+<!--                                        <span><input type="radio" name="text_opt_py2" value="default" checked>default</span>-->
+<!--                                        <span><input type="radio" name="text_opt_py2" value="bytes">bytes</span>-->
+                                        <span><input type="radio" name="text_opt_py2" value="default" checked>bytes (default)</span>
+                                        <span><input type="radio" name="text_opt_py2" value="unicode">unicode</span>
+                                    </div>
+                                    <div class="text_type code">
+                                        <i class="replChev"></i>my_text = <span id="text_prefix_py2"></span><i class="inputWrap strColor">'<input class="strColor in" id="text_in_py2">'</i>
+                                        <hr>
+                                        <div class="rowFlex"><i class="replChev"></i>my_text[<input class="idx" id="text_idx_py2">]</div>
+                                        <div id="text_res_py2" class="res"></div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <h3>py3</h3>
+                                    <div class="text_type_options">
+<!--                                        <span><input type="radio" name="text_opt_py3" value="default" checked>default</span>-->
+                                        <span><input type="radio" name="text_opt_py3" value="bytes">bytes</span>
+<!--                                        <span><input type="radio" name="text_opt_py3" value="unicode">unicode</span>-->
+                                        <span><input type="radio" name="text_opt_py3" value="default" checked>unicode (default)</span>
+                                    </div>
+                                    <div class="text_type code">
+                                        <i class="replChev"></i>my_text = <span id="text_prefix_py3"></span><i class="inputWrap strColor">'<input class="strColor in" id="text_in_py3">'</i>
+                                        <hr>
+                                        <div class="rowFlex"><i class="replChev"></i>my_text[<input class="idx" id="text_idx_py3">]</div>
+                                        <div id="text_res_py3" class="res"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text_type_cmp_desc hide">py2 and py3 types match? <span id="text_type_cmp"></span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--COMPARISON-->
+                <div class="card">
+                    <div class="card-header" data-toggle="collapse" data-target="#collapse4"><h2>Comparison</h2></div>
+                    <div id="collapse4" class="collapse" data-parent="#demoAccordion">
+                        <div class="card-body">
+                            <div>Py2 will allow comparisons more or less between anything and anything else, regardless of the types of their data</div>
+                            <div>Py3 is stricter than py2 when comparing data, allowing only comparisons between data of the same type (i.e. numbers with numbers, text with text etc.) otherwise an error is raised.</div>
+                            <div class="row">
+                                <div class="col">
+                                    <h3>py2</h3>
+                                    <div class="comparison code">
+                                        <i class="replChev"></i><select id="cmp_in1_py2"></select><input type="button" id="cmp_op_py2"><select id="cmp_in2_py2"></select>
+                                        <div id="cmp_res_py2" class="res"></div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <h3>py3</h3>
+                                    <div class="comparison code">
+                                        <i class="replChev"></i><select id="cmp_in1_py3"></select><input type="button" id="cmp_op_py3"><select id="cmp_in2_py3"></select>
+                                        <div id="cmp_res_py3" class="res"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--HASHING-->
+                <div class="card">
+                    <div class="card-header" data-toggle="collapse" data-target="#collapse5"><h2>Hashing</h2></div>
+                    <div id="collapse5" class="collapse" data-parent="#demoAccordion">
+                        <div class="card-body">
+                            <div><a href="https://en.wikipedia.org/wiki/Hash_function" target="_blank">Hashing</a> provides a quick and reliable way of uniquely identifying an object.
+                                 Python uses hash functions to calculate the integer value which is unique to a given bit of data. This is useful for creating certain types of data collections.</div>
+                            <div>A <a href="https://docs.python.org/3.7/library/stdtypes.html#set-types-set-frozenset" target="_blank">set</a> in python is an collection of unique objects.
+                                 Sets are unordered... or more accurately, the order is determined by the hashes of the objects within it, rather than the order that the objects are inserted.</div>
+                            <div>Py2 and py3 use different functions for hashing, meaning that the hash orderings will be different. This can be observed if the set is converted into an sequence (like a <a href="https://docs.python.org/3.7/library/stdtypes.html#lists" target="_blank">list</a>).
+                                 A list is an ordered collection, and the example below shows how the list preserves the ordering created by the hashing of the objects in the set.</div>
+                            <div class="row">
+                                <div class="col">
+                                    <h3> py2</h3>
+                                    <div class="hashing code">
+                                        <i class="replChev"></i>my_set = {<input id="hash_in_py2">}
+                                        <hr>
+                                        <i class="replChev"></i><b class="funcColor">list</b>(my_set)
+                                        <div id="hash_res_py2" class="res"></div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <h3> py3</h3>
+                                    <div class="hashing code">
+                                        <i class="replChev"></i>my_set = {<input id="hash_in_py3">}
+                                        <hr>
+                                        <i class="replChev"></i><b class="funcColor">list</b>(my_set)
+                                        <div id="hash_res_py3" class="res"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<script>
+/** ### ======= SLIDES ======= ### **/
+
+// ====== LAYOUT ======
+function computeDimensions() {
+    const availWidth = $(window).width() - ((23 + 32) * 2);
+    const availHeight = $(window).height() - 50 - ((23 + 32) * 2);
+
+    const width = availHeight / 0.6 > availWidth ? availWidth : availHeight / 0.6;
+    const height = availWidth * 0.6 > availHeight ? availHeight : availWidth * 0.6;
+
+    $('.presSlide').css({'width': width, 'height': height, 'font-size': height * 290381124 / 10000000000, 'box-shadow': `0 0 ${height * 0.009}px #ccc`});
+    $('.presSlide ul, .presSlide ol').css({'padding-inline-start': ((40 / 551) * height)});
+    $('.carousel-control-next, .carousel-control-prev').css({'width': ($(window).width() - width) / 2 });
+}
+
+$(window).on('load resize', computeDimensions);
+
+
+// ====== CONTROLS ======
+$('#presentationSlides')
+    .on('slide.bs.carousel', function () {
+        $('.carousel-control-prev, .carousel-control-next').blur();
+    })
+    .on('slid.bs.carousel', function () {
+        $('.carousel-control-prev, .carousel-control-next').show();
+
+        if($('#presentationSlides .carousel-item:first').hasClass('active')) {
+            $('.carousel-control-prev').fadeOut();
+        }
+        else if($('#presentationSlides .carousel-item:last').hasClass('active')) {
+            $('.carousel-control-next').fadeOut();
+        }
+    })
+    .trigger('slid.bs.carousel');
+
+$(document).bind('keyup', function(e) {
+    if ($('#nav-pres').hasClass('active')) {
+        if (e.which === 39 || e.which === 40){
+            $('#presentationSlides').carousel('next');
+        }
+        else if (e.which === 37 || e.which === 38){
+            $('#presentationSlides').carousel('prev');
+        }
+    }
+});
+
+
+
+/** ### ======== DEMO ======== ### **/
+
+// ====== LAYOUT ======
+$('.card-header').on('click', function() {
+    const all = $('.card-header');
+    const open = $('#demoAccordion .collapse.show').prev()[0];
+    if (this === open) {
+        all.css('color', 'rgba(33, 37, 85, 0.85)');
+    }
+    else {
+        all.css('color', 'rgba(33, 37, 85, 0.4)');
+        $(this).css('color', 'rgba(33, 37, 128, 1)');
+    }
+});
+
+$('.demo_link').on('click', function() {
+    $('#nav-tab #nav-demo-tab').tab('show');
+    const target = $(this).attr('data-target');
+    $(target).collapse('show');
+    $(`.card-header[data-target='${target}']`).trigger('click');
+});
+
+$('.replChev').html('>>>&#160;');
+$('.division input, .division .res, .rounding input, .rounding .res, .text_type input.idx').addClass('numColor');
+
+
+// ====== INPUT HANDLER ======
+(function($) {
+    $.fn.inputFilter = function(inputFilter) {
+        return this.on("input keydown keyup mousedown mouseup select contextmenu drop", function(e) {
+            if (inputFilter(this.value, this)) {
+                this.oldValue = this.value;
+                this.oldSelectionStart = this.selectionStart;
+                this.oldSelectionEnd = this.selectionEnd;
+                $(this).css('width', this.value.length + 'ch')
+            }
+            else if (this.hasOwnProperty("oldValue")) {
+                this.value = this.oldValue;
+                this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+            }
+        });
+    };
+}($));
+
+// ====== NUM CTRL ======
+const ctrlHtml = `
+    <span class="numCtrl hide">
+        <button class="numCtrlUp"><i class="fa fa-chevron-up"></i></button>
+        <button class="numCtrlDn"><i class="fa fa-chevron-down"></i></button>
+    </span>
+`;
+
+function initNumCtrl(param) {
+    function numCtrlHoverHandler(node, ctrl) {
+        node.hover(function() {ctrl.removeClass('hide')}, function() {ctrl.addClass('hide')});
+    }
+
+    function numCtrlClickHandler(button, input, inc) {
+        button.click(function() {
+            const val = input.val();
+            const hasPoint = Number.isInteger(parseFloat(val)) && val.includes('.');
+            let newVal = parseFloat(val) + inc;
+            (input.attr('id').startsWith('div_in2') && newVal === 0) && (newVal += inc);
+            hasPoint && (newVal += '.' + val.split('.')[1]);
+            input.val(newVal).trigger('input').trigger('change');
+        });
+    }
+
+    for (let i of $(param.selector)) {
+        const input = $(i);
+        input.after(ctrlHtml);
+
+        const ctrl = input.next();
+        numCtrlHoverHandler(input, ctrl);
+        numCtrlHoverHandler(ctrl, ctrl);
+
+        const [upButton, dnButton] = ctrl.children();
+        numCtrlClickHandler($(upButton), input, 1);
+        numCtrlClickHandler($(dnButton), input, -1);
+    }
+}
+
+
+// ====== DIVISION ======
+function computeDivision() {
+    const in1 = $('#div_in1_py2').val(), in2 = $('#div_in2_py2').val();
+    if (!in1 || !in2) {
+        $('.division .res').text('');
+        return
+    }
+    const res = in1 / in2;
+    const py3res = Number.isInteger(res) ? res.toFixed(1) : res;
+    const py2res = (in1.includes('.') || in2.includes('.')) ? py3res : Math.floor(res);
+    $('#div_res_py2').text(py2res);
+    $('#div_res_py3').text(py3res);
+}
+
+
+// ====== ROUNDING ======
+function computeRounding() {
+    const val = $('#round_in_py2').val();
+    if (!val) {
+        $('.rounding .res').text('');
+        return
+    }
+    const res = Math.round(val);
+    const py2res = (((val).endsWith('.5') && val < 0) ? res - 1 : res).toFixed(1);
+    const py3res = ((val).endsWith('.5') && res % 2) ? Math.floor(val) : res;
+    $('#round_res_py2').text(py2res);
+    $('#round_res_py3').text(py3res);
+}
+
+
+// ====== TEXT TYPE ======  //
+$('.text_type input.in')
+    .hover(
+        function(){$(this).parent().addClass('inputHover')},
+        function(){$(this).parent().removeClass('inputHover')}
+    )
+    .focus(function() {$(this).parent().addClass('inputFocus')})
+    .blur(function() {$(this).parent().removeClass('inputFocus')});
+
+function textIdxFilter(val) {
+    const maxIdx = $('#text_in_py2').val().length;
+    const isValid = /^-?(\d*)$/.test(val);
+    const numberCheck = isNaN(val) ? true : (val < 0 ? Math.abs(val) <= maxIdx : val < maxIdx);
+    return isValid && numberCheck
+}
+
+function computeTextType(e) {
+    const prefixMap = {'default': '', 'bytes': 'b', 'unicode': 'u'};
+    const type_py2 = prefixMap[$('input[name=text_opt_py2]:checked').val()] || 'b';
+    const type_py3 = prefixMap[$('input[name=text_opt_py3]:checked').val()] || 'u';
+
+    const match = type_py2 === type_py3;
+    $('#text_type_cmp').html(`<b class="${match ? 'ok' : 'error'}">${match ? 'Yes' : 'No'}</b>`);
+
+    if ($(e.target).attr('type') === 'radio') {
+        const checked = $(`input[name=${e.target.name}]:checked`).val();
+        $(`#${e.target.name.replace('opt', 'prefix')}`).text(prefixMap[checked]);
+    }
+
+    if ($(e.target).hasClass('in')) {
+        $('.text_type input.idx').val(0);
+    }
+
+    let idx = $('#text_idx_py2').val();
+    if (!idx) {
+        $('.text_type .res').text('');
+        return
+    }
+
+    const val = $('#text_in_py2').val();
+    idx = +idx === -0 ? 0 : +idx < 0 ? +idx + val.length: +idx;
+
+    const py2res = (type_py2 === 'u' ? 'u' : '') + `<i class="strColor">'${val[idx]}'</i>`;
+    const py3res = type_py3 === 'b' ? `<i class="numColor">${val.charCodeAt(idx)}</i>` :`<i class="strColor">'${val[idx]}'</i>`;
+    $('#text_res_py2').html(py2res);
+    $('#text_res_py3').html(py3res);
+}
+
+
+// ====== COMPARISON ======
+const cmpOptions = `
+    <option value="'hello'">'hello'</option>
+    <option value="'world'">'world'</option>
+    <option value="42">42</option>
+    <option value="9000">9000</option>
+    <option value="None">None</option>
+`;
+$('#cmp_in1_py2, #cmp_in2_py2, #cmp_in1_py3, #cmp_in2_py3').html(cmpOptions);
+$('#cmp_op_py2, #cmp_op_py3').val('>').on('click', function(e){
+    $(this).val($(this).val() === '>' ? '<' : '>');
+    mirrorChangeHandler(e);
+    computeComparison();
+});
+
+function computeComparison() {
+    const sorted = ['None', '42', '9000', "'hello'", "'world'"];
+    const typeMap = {'None': 'None', '42': 'int', '9000': 'int', "'hello'": 'str', "'world'": 'str'};
+    const opMap = {'>': (a, b) => a > b, '<': (a, b) => a < b};
+
+    const styleMap = {'None': 'bold', '42': 'numColor', '9000': 'numColor', "'hello'": 'strColor', "'world'": 'strColor'};
+    $('.comparison select').removeClass('bold numColor strColor').addClass(function() {return styleMap[$(this).val()]});
+
+    const in1 = $('#cmp_in1_py2').val(), in2 = $('#cmp_in2_py2').val(), op = $('#cmp_op_py2').val() ;
+    const error = typeMap[in1] !== typeMap[in2] || in1 === 'None' ? 'error' : '';
+
+    const py2res = opMap[op](sorted.indexOf(in1), sorted.indexOf(in2)) ? 'True' : 'False';
+    const py3res = error ? 'Error!' : py2res;
+    $('#cmp_res_py2').html(`<b>${py2res}</b>`);
+    $('#cmp_res_py3').html(`<b class="${error}">${py3res}</b>`);
+}
+
+
+// ====== HASHING ======
+const PY2_HASH = ['a', 'c', 'b', 'e', 'd', 'g', 'f', 'i', 'h', 'k', 'j', 'm', 'l', 'o', 'n', 'q', 'p', 's', 'r', 'u', 't', 'w', 'v', 'y', 'x', 'z'];
+const PY3_HASH = shuffle(PY2_HASH);  // to emulate hash randomization: https://docs.python.org/3/reference/datamodel.html#object.__hash__
+
+function shuffle(array) {
+    let [a, ...arr] = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    arr.push(a);  // ensures the default example is different for py2 & py3
+    return arr;
+}
+
+function hashingFilter(val, target) {
+    const isValid = /^[a-z, ]*$/i.test(val);
+    if (isValid) {
+        const transformed = val.toLowerCase().replace(/,/g, '').replace(/ /g, '').split('').join(', ');
+        $(`#${target.id}`).val(transformed)
+    }
+    return isValid
+}
+
+function computeHashing() {
+    const val = $('#hash_in_py2').val().split(', ');
+    const py2res = [...new Set(val)], py3res = [...new Set(val)];
+    py2res.sort((a, b) => PY2_HASH.indexOf(a) < PY2_HASH.indexOf(b) ?  -1 : 1);
+    py3res.sort((a, b) => PY3_HASH.indexOf(a) < PY3_HASH.indexOf(b) ?  -1 : 1);
+
+    $('#hash_res_py2').text(`[${py2res.join(', ')}]`);
+    $('#hash_res_py3').text(`[${py3res.join(', ')}]`);
+}
+
+
+// ====== INITIALISE ======
+const initialParams = [
+    {selector: '.division input', values: {div_in1_py2: 10, div_in2_py2: 3}, onchange: computeDivision, filter: /^-?(\d*\.?\d*)$/, numCtrl: true},  // division
+    {selector: '.rounding input', values: {round_in_py2: -2.5}, onchange: computeRounding, filter: /^-?(\d*\.?\d*)$/, numCtrl: true},  // rounding
+    {selector: '.text_type input.in', values: {text_in_py2: 'python!'}, onchange: computeTextType, filter: /^[ -&(-\[\]-~]*$/},  // text type
+    {selector: '.text_type input.idx', values: {text_idx_py2: 0}, onchange: computeTextType, filter: {test: val => textIdxFilter(val)}, numCtrl: true},  // text type idx
+    {selector: '.text_type_options input', values: {}, onchange: computeTextType, disableMirror: true},  // text type radio
+    {selector: '.comparison select', values: {cmp_in2_py2: 42}, onchange: computeComparison},  // comparison
+    {selector: '.hashing input', values: {hash_in_py2: 'a, b, a, c'}, onchange: computeHashing, filter: {test: (val, t) => hashingFilter(val, t)}},  // hashing
+];
+
+function mirrorChangeHandler(e) {
+    const id = e.target.id;
+    const [curr, other] = id.endsWith('2') ? ['py2', 'py3'] : ['py3', 'py2'];
+    const otherId = id.replace(curr, other);
+
+    if (['-', '.', '-.'].includes(e.target.value)) e.target.value = '';
+    if (id.startsWith('div_in2') && parseFloat(e.target.value) === 0) e.target.value = '';
+
+    $(`#${otherId}`).val(e.target.value);
+    $(`#${id}, #${otherId}`).css('width', (e.target.value+'').length + 'ch');
+}
+
+for (let param of initialParams) {
+    const changeFunc = function(e) {
+        if (!param.disableMirror) mirrorChangeHandler(e);
+        param.onchange(e);
+    };
+    $(param.selector).change(changeFunc);
+
+    for (let id of Object.keys(param.values)) {
+        $(`#${id}`).val(param.values[id]);
+        changeFunc({target: {id: id, value: param.values[id]}});
+    }
+
+    if (param.filter) {
+        $(param.selector).inputFilter(function(val, t) {
+            return param.filter.test(val, t);
+        });
+        $(param.selector).trigger('input');
+    }
+
+    if (param.numCtrl) {
+        initNumCtrl(param);
+    }
+}
+</script>
+</body>
+</html>
